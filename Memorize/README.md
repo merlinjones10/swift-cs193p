@@ -1,11 +1,15 @@
 #  swift cs193
+time stamp 0:00
+https://www.youtube.com/watch?v=--qKOhdgJAs
 
-https://www.youtube.com/watch?v=3lahkdHEhW8
+Materials at https://cs193p.sites.stanford.edu/
 
 - 28/4 45:39
 - - Look at loops. for loops, arrays, array methods? etc. 
+closures
 
-option command enter - preview
 
-
-option click on type/var etc for documentation
+Shortcuts. 
+- option command enter - preview
+- option click on type/var etc for documentation
+- ctrl + i, format code
