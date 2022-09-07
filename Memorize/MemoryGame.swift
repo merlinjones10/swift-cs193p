@@ -3,23 +3,37 @@
 // My model is a struct. sorta like a class.
 
 import Foundation
+//  MJ 1:19
 
-
-struct MemoryGame<CardContent> {
-   private(set) var cards: Array<Card>
+struct MemoryGame<CardContent> where CardContent: Equatable {
+    private(set) var cards: Array<Card>
+    
+    private var indexOfTheOneAndOnlyFaceUpCard: Int?
     
     mutating func choose(_ card: Card) {
-        let chosenIndex = index(of: card)
-        cards[chosenIndex].isFaceUp.toggle()
-    }
-    
-    func index(of card: Card) -> Int {
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
+        if let chosenIndex = cards.firstIndex(where: {$0.id == card.id}),
+            !cards[chosenIndex].isFaceUp,
+            !cards[chosenIndex].isMatched
+        {
+            if let potentialMatchIndex = indexOfTheOneAndOnlyFaceUpCard {
+                if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                    cards[chosenIndex].isMatched = true
+                    cards[potentialMatchIndex].isMatched = true
+                    
+                }
+                indexOfTheOneAndOnlyFaceUpCard = nil
+            } else {
+                for index in cards.indices {
+                    cards[index].isFaceUp = false
+                }
+                indexOfTheOneAndOnlyFaceUpCard = chosenIndex
+
             }
+         
+            cards[chosenIndex].isFaceUp.toggle()
+           
         }
-        return 0
+        print("\(cards)")
     }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
@@ -28,12 +42,12 @@ struct MemoryGame<CardContent> {
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
             cards.append(Card(content : content, id : pairIndex*2))
-             cards.append(Card(content : content, id : pairIndex*2+1))
+            cards.append(Card(content : content, id : pairIndex*2+1))
         }
     }
     
     struct Card: Identifiable {
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent
         var id: Int
