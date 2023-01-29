@@ -5,7 +5,6 @@ struct ContentView: View {
     @ObservedObject var viewModel : EmojiMemoryGame
     
     var body: some View {
-        
         ScrollView {
             LazyVGrid(columns : [GridItem(.adaptive(minimum : 65))]) {
                 ForEach(viewModel.cards) { card in
@@ -17,7 +16,6 @@ struct ContentView: View {
             }
         }
         .foregroundColor(.red)
-        
         .padding(.horizontal)
     }
 }

@@ -36,6 +36,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         print("\(cards)")
     }
     
+    
+    
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = Array<Card>()
         // add numberOfPairsOfCards x 2 to cards array
